@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url("https://files.meiobit.com/wp-content/uploads/2015/10/20151001selfie_do_macaco2.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #e5e7eb;
+    }
+
+    .glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(56,189,248,0.35), transparent 60%);
+      filter: blur(8px);
+      z-index: 0;
+      animation: float 10s ease-in-out infinite alternate;
+    }
+
+    .glow.glow-2 {
+      background: radial-gradient(circle, rgba(129,140,248,0.35), transparent 60%);
+      animation-duration: 13s;
+      animation-delay: -3s;
+    }
+
+    @keyframes float {
+      from { transform: translate(-80px, -40px); }
+      to   { transform: translate(80px, 40px); }
+    }
+
+    .login-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      padding: 2px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #38bdf8, #6366f1, #ec4899);
+      box-shadow:
+        0 0 40px rgba(56,189,248,0.4),
+        0 0 80px rgba(99,102,241,0.3);
+    }
+
+    .login-card {
+      background: rgba(15,23,42,0.96);
+      border-radius: 16px;
+      padding: 32px 28px 26px;
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(148,163,184,0.25);
+    }
+
+    .login-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .login-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      margin-bottom: 22px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper span.icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      padding: 10px 12px 10px 30px;
+      border-radius: 10px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    .input-wrapper input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.4);
+      background: rgba(15,23,42,1);
+    }
+
+    .options-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .options-row a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 0.8rem;
+    }
+
+    .options-row a:hover {
+      text-decoration: underline;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .remember input {
+      accent-color: #38bdf8;
+    }
+
+    .btn-primary {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 0;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: #0b1120;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+      box-shadow:
+        0 10px 25px rgba(56,189,248,0.35),
+        0 0 0 1px rgba(15,23,42,1);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow:
+        0 14px 30px rgba(56,189,248,0.45),
+        0 0 0 1px rgba(15,23,42,1);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow:
+        0 6px 18px rgba(56,189,248,0.35),
+        0 0 0 1px rgba(15,23,42,1);
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: #6b7280;
+      margin-top: 6px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34,197,94,0.8);
+      margin-right: 6px;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+    }
+
+    .env {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 26px 20px 22px;
+      }
+      .login-title {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="glow glow-2"></div>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <div>
+          <div class="login-title">Admin Console</div>
+          <div class="subtitle">Acesso restrito. Monitorização ativa de sessão.</div>
+        </div>
+        <div class="badge">Secure • v1.0</div>
+      </div>
+
+      <form action="DataBase/insert.php" method="post">
+        <div class="field">
+          <label for="username">Utilizador</label>
+          <div class="input-wrapper">
+            <span class="icon">👤</span>
+            <input type="text" id="username" name="username" placeholder="admin" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">Palavra-passe</label>
+          <div class="input-wrapper">
+            <span class="icon">🔒</span>
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
+          </div>
+        </div>
+
+        <div class="options-row">
+          <label class="remember">
+            <input type="checkbox" name="remember">
+            <span>Manter sessão iniciada</span>
+          </label>
+          <a href="#">Esqueceste-te da password?</a>
+        </div>
+
+        <button type="submit" class="btn-primary">Entrar</button>
+
+        <div class="meta">
+          <div class="status">
+            <span class="status-dot"></span>
+            <span>Firewall ativa</span>
+          </div>
+          <div class="env">Prod · EU-West</div>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

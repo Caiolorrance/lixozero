@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Portal de Reciclagem</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://www.neoenergia.com/documents/d/guest/simbolo-da-reciclagem-jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login-box {
+            max-width: 400px;
+            margin: 80px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+        <h2 style="text-align: center; color: #2f6f3e;">Portal de Reciclagem</h2>
+        <p style="text-align: center; color: #555;">Faça login para continuar</p>
+
+        <form action="DataBase/select.php" method="post">
+            <label for="email">Email:</label><br>
+            <input type="email" name="email_utilizador" required
+                style="width: 100%; padding: 8px; margin: 6px 0 12px; box-sizing: border-box;"
+            ><br>
+
+            <label for="senha">Senha:</label><br>
+            <input type="password" name="senha" required
+                style="width: 100%; padding: 8px; margin: 6px 0 12px; box-sizing: border-box;"
+            ><br>
+
+            <button
+                type="submit"
+                style="width: 100%; padding: 10px; background-color: #2f6f3e; color: white; border: none; border-radius: 4px; cursor: pointer;"
+            >
+                Entrar
+            </button>
+        </form>
+
+        <p style="text-align: center; margin-top: 16px; font-size: 14px; color: #777;">
+            Ainda não tem conta? <a href="registar.html" style="color: #2f6f3e;"><b>Registar</b></a>
+        </p>
+    </div>
+
+</body>
+</html>

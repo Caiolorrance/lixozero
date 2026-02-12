@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+   
+
+    <title>Mapa Interativo Lisboa</title>
+</head>
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+      
+         var map = L.map('map').setView([38.743164, -9.132753], 11.5);
+
+        
+        const baseLayer =L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+
+
+    var pilhoesLayer=L.layerGroup();
+    var REEELayer=L.layerGroup();
+
+
+    function loadREEE() {
+            fetch(`https://services.arcgis.com/1dSrzEWVQn5kHHyK/arcgis/rest/services/Amb_Reciclagem/FeatureServer/5/query?outFields=*&where=1%3D1&f=geojson`)
+            .then(response => response.json())
+            .then(data => {
+                L.geoJSON(data, {
+                    pointToLayer: function (feature, latlng) {
+                            var lixoIcon = L.icon({
+                                iconUrl: 'https://cdn-icons-png.freepik.com/512/11158/11158989.png',
+                                iconSize: [30, 30],
+                                iconAnchor: [15, 30],
+                                popupAnchor: [0, -30]
+                            });
+                            return L.marker(latlng, { icon: lixoIcon });
+                        },
+                    onEachFeature: function (feature, layer) {
+                            layer.bindPopup(`<b>REED:</b> ${feature.properties.PRSL_LOCAL || "Desconecido"}`);
+                        }
+                }).addTo(REEELayer);
+            });
+        }
+
+  function loadPilhoes() {
+            fetch(`https://services.arcgis.com/1dSrzEWVQn5kHHyK/arcgis/rest/services/Amb_Reciclagem/FeatureServer/9/query?outFields=*&where=1%3D1&f=geojson`)
+            .then(response => response.json())
+            .then(data => {
+                L.geoJSON(data, {
+                    pointToLayer: function (feature, latlng) {
+                            var lixoIcon = L.icon({ //caio falcão
+                                iconUrl: 'https://cdn-icons-png.freepik.com/512/2160/2160413.png',
+                                iconSize: [30, 30],
+                                iconAnchor: [15, 30],
+                                popupAnchor: [0, -30]
+                            });
+                            return L.marker(latlng, { icon: lixoIcon });
+                        },
+                    onEachFeature: function (feature, layer) {
+                            layer.bindPopup(`<b>Vidrão:</b> ${feature.properties.PRSL_LOCAL || "Desconhecido"}`);
+                        }
+                }).addTo(pilhoesLayer);
+            });
+        }
+
+
+        loadREEE();
+        loadPilhoes();
+
+       
+        const baseMaps = {};
+
+        var overlayMaps = {
+            "REEE": REEELayer,
+            "Pilhões": pilhoesLayer
+        };
+
+   
+
+        L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+</script>
+</body>
+</html>
